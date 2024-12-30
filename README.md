@@ -1,6 +1,6 @@
 # Vite Plugin Rtl Css
 
-This Vite plugin makes it so the official TypeScript compiler is used instead of esbuild!
+Vite plugin for rtlcss
 
 ## Installation
 
