@@ -1,0 +1,71 @@
+{
+  "name": "vite-plugin-rtl-css",
+  "version": "1.0.0",
+  "description": "Vite plugin for rtlcss",
+  "type": "module",
+  "license": "MIT",
+  "private": false,
+  "author": {
+    "name": "SmushyTaco",
+    "email": "personal@nikanradan.com"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.12.0",
+    "npm": ">=8.19.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SmushyTaco/vite-plugin-rtl-css.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SmushyTaco/vite-plugin-rtl-css/issues"
+  },
+  "scripts": {
+    "clean": "npx del-cli dist",
+    "build": "npm run clean && npx vite build",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "postcss": "^8.4.49",
+    "rtlcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/rtlcss": "^3.5.4",
+    "@types/node": "^22.10.2",
+    "@eslint/js": "^9.17.0",
+    "@smushytaco/versionchecker": "^1.0.3",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "typescript-eslint": "^8.18.2",
+    "vite": "^6.0.6",
+    "vite-plugin-tsc-transpile": "^1.0.3",
+    "vite-plugin-dts": "^4.4.0",
+    "globals": "^15.14.0",
+    "del-cli": "^6.0.0"
+  }
+}
