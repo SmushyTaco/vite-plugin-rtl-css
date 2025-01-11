@@ -1,10 +1,11 @@
 // @ts-check
-'use strict';
 
 import globals from 'globals';
 import eslint from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import tsEslintPlugin from '@typescript-eslint/eslint-plugin';
+import unicornPlugin from 'eslint-plugin-unicorn';
+import prettierPlugin from 'eslint-plugin-prettier';
 
 export default [
     {
@@ -19,11 +20,15 @@ export default [
             }
         },
         plugins: {
-            '@typescript-eslint': tsEslintPlugin
+            '@typescript-eslint': tsEslintPlugin,
+            unicorn: unicornPlugin,
+            prettier: prettierPlugin
         },
         rules: {
             ...eslint.configs.recommended.rules,
-            ...tsEslintPlugin.configs.recommended.rules
+            ...tsEslintPlugin.configs.recommended.rules,
+            ...unicornPlugin.configs['flat/recommended']['rules'],
+            'prettier/prettier': 'error'
         }
     },
     {
@@ -34,8 +39,14 @@ export default [
                 sourceType: 'module'
             }
         },
+        plugins: {
+            unicorn: unicornPlugin,
+            prettier: prettierPlugin
+        },
         rules: {
-            ...eslint.configs.recommended.rules
+            ...eslint.configs.recommended.rules,
+            ...unicornPlugin.configs['flat/recommended']['rules'],
+            'prettier/prettier': 'error'
         }
     },
     {
@@ -49,11 +60,15 @@ export default [
             }
         },
         plugins: {
-            '@typescript-eslint': tsEslintPlugin
+            '@typescript-eslint': tsEslintPlugin,
+            unicorn: unicornPlugin,
+            prettier: prettierPlugin
         },
         rules: {
             ...eslint.configs.recommended.rules,
-            ...tsEslintPlugin.configs.recommended.rules
+            ...tsEslintPlugin.configs.recommended.rules,
+            ...unicornPlugin.configs['flat/recommended']['rules'],
+            'prettier/prettier': 'error'
         }
     }
 ];

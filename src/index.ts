@@ -15,9 +15,13 @@ function viteRtlCssPlugin(options: RtlCssPluginOptions = {}): Plugin {
         '.min.css': '[name].rtl.min.css'
     };
 
-    const getOutputFileName = (inputFileName: string, ext: string): string => {
-        const baseName = inputFileName.slice(0, -ext.length);
-        const template = fileNameMap[ext] || `${baseName}.rtl${ext}`;
+    const getOutputFileName = (
+        inputFileName: string,
+        extension: string
+    ): string => {
+        const baseName = inputFileName.slice(0, -extension.length);
+        const template =
+            fileNameMap[extension] || `${baseName}.rtl${extension}`;
         return template.replace('[name]', baseName);
     };
 
@@ -32,13 +36,28 @@ function viteRtlCssPlugin(options: RtlCssPluginOptions = {}): Plugin {
         async generateBundle(_, bundle) {
             for (const [fileName, asset] of Object.entries(bundle)) {
                 if (asset.type !== 'asset') continue;
-                const ext = Object.keys(fileNameMap).find((key) =>
+                const sortedFileNameMapKeys = Object.keys(fileNameMap).sort(
+                    (a, b) => {
+                        const dotCountA = (a.match(/\./g) || []).length;
+                        const dotCountB = (b.match(/\./g) || []).length;
+
+                        // Sort by dot count (descending)
+                        if (dotCountA !== dotCountB) {
+                            return dotCountB - dotCountA;
+                        }
+
+                        // If dot counts are equal, sort by length (descending)
+                        return b.length - a.length;
+                    }
+                );
+
+                const extension = sortedFileNameMapKeys.find((key) =>
                     fileName.endsWith(key)
                 );
-                if (!ext) continue;
+                if (!extension) continue;
                 const cssContent = asset.source?.toString();
                 if (!cssContent) continue;
-                const rtlFileName = getOutputFileName(fileName, ext);
+                const rtlFileName = getOutputFileName(fileName, extension);
                 const result = await postcss([
                     rtlcss(options.rtlcssConfig)
                 ]).process(cssContent, {

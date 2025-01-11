@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite';
 import viteTscPlugin from 'vite-plugin-tsc-transpile';
 import dts from 'vite-plugin-dts';
-import { fileURLToPath } from 'url';
-import fs from 'fs/promises';
-import path from 'path';
+import { fileURLToPath } from 'node:url';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 
 export default defineConfig({
     build: {
@@ -13,7 +13,8 @@ export default defineConfig({
                 'src/index.ts'
             ),
             formats: ['es', 'cjs'],
-            fileName: (format) => (format === 'es' ? 'index.mjs' : 'index.cjs')
+            fileName: (format, entryName) =>
+                format === 'es' ? `${entryName}.mjs` : `${entryName}.cjs`
         },
         rollupOptions: {
             external: ['vite', 'postcss', 'rtlcss']
@@ -29,8 +30,8 @@ export default defineConfig({
                     if (filePath.endsWith('.d.ts')) {
                         const dMtsPath = filePath.replace(/\.d\.ts$/, '.d.mts');
                         const dCtsPath = filePath.replace(/\.d\.ts$/, '.d.cts');
-                        await fs.writeFile(dMtsPath, content, 'utf-8');
-                        await fs.writeFile(dCtsPath, content, 'utf-8');
+                        await fs.writeFile(dMtsPath, content, 'utf8');
+                        await fs.writeFile(dCtsPath, content, 'utf8');
                         await fs.unlink(filePath);
                     }
                 }
