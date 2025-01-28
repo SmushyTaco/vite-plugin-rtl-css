@@ -25,6 +25,7 @@ function viteRtlCssPlugin(options: RtlCssPluginOptions = {}): Plugin {
         return template.replace('[name]', baseName);
     };
 
+    // noinspection JSUnusedGlobalSymbols
     return {
         name: 'vite-rtlcss-plugin',
         enforce: 'post',
